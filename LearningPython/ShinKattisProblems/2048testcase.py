@@ -25,22 +25,17 @@ def transpose_back(matrix, move):
         return matrix
 def string_to_int(line):
     return [int(line[0]), int(line[1]), int(line[2]), int(line[3])]
-def read_data():
-    matrix = []
-    for i in range(4):
-        matrix.append(string_to_int(input().split()))
-    move = int(input())
-    matrix = transpose(matrix, move)
-    return matrix, move
 def write_answer(matrix, move):
+    writing = open("testcase.op", "a+")
     matrix = transpose_back(matrix, move)
     for i in range(4):
         for j in range(4):
-            print(matrix[i][j], end=' ')
-        print("")
+            a = str(matrix[i][j]) + ' '
+            writing.write(a)
+        writing.write("\n")
+    writing.write("\n")
 def move_matrix(matrix):
     for i in range(4):
-
         added1 = False
         added2 = False
         twozero = False
@@ -85,10 +80,19 @@ def move_matrix(matrix):
             line[0] = 0
         matrix[i] = line
     return matrix
+def read_data():
+    for x in range(20):
+        reading = open("2048.testcase.txt", "r")
+        matrix = []
+        for i in range(4):
+            matrix.append(string_to_int(reading.readline().split()))
+        move = int(reading.readline())
+        matrix = transpose(matrix, move)
+        move_matrix(matrix)
+        write_answer(matrix, move)
+
 def main():
     # 0 - Left, 1 - Up, 2 - Right, 3- Down
-    matrix, move = read_data()
-    move_matrix(matrix)
-    write_answer(matrix, move)
+    read_data()
 if __name__ == "__main__":
     main()
