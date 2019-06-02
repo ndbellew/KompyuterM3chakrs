@@ -9,6 +9,7 @@ import threading
 
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 
+
 def main():
 
     if os.geteuid() != 0:

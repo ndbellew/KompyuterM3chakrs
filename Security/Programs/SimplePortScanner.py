@@ -14,6 +14,7 @@ def TCP_connect(ip, port_number, delay, output):
 
 def scan_ports(host_ip, delay):
 
+
     threads = []        # To run TCP_connect concurrently
     output = {}         # For printing purposes
 
