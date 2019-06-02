@@ -10,10 +10,7 @@ def TCP_connect(ip, port_number, delay, output):
     except:
         output[port_number] = ''
 
-
-
 def scan_ports(host_ip, delay):
-
 
     threads = []        # To run TCP_connect concurrently
     output = {}         # For printing purposes
@@ -34,8 +31,6 @@ def scan_ports(host_ip, delay):
     for i in range(10000):
         if output[i] == 'Listening':
             print(str(i) + ': ' + output[i])
-
-
 
 def main():
     host_ip = input("Enter host IP: ")
