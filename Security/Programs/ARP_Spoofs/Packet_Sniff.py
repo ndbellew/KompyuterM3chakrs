@@ -47,10 +47,13 @@ def Sniff_Packet(packet):
         pckt_src=packet[IP].src
         pckt_dst=packet[IP].dst
         pckt_ttl=packet[IP].ttl
-        if (pckt_dst not in ["224.0.0.251", "255.255.255.255","162.159.133.234","192.168.1.255", me] and pckt_src != attacker) and pckt_src not in ["162.159.133.234"]:
+        if (pckt_dst != attacker and pckt_src != attacker) and pckt_src not in ["162.159.133.234"]:
         #if pckt_dst == "192.168.21.215" or pckt_src=="192.168.21.215":
             print ("IP Packet:"+str(pckt_src)+" is going to "+str(pckt_dst)+" and has ttl value "+str(pckt_ttl))
         #if pckt_src in ["192.168.21.215"] or pckt_dst ==  "192.168.21.215":
             packet.show()
-
-sniff(filter=filter,iface=interface,prn=Sniff_Packet)
+try:
+    sniff(filter=filter,iface=interface,prn=Sniff_Packet)
+except OSError:
+    parser.print_help()
+    sys.exit(1)
