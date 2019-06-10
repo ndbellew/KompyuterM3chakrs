@@ -3,7 +3,9 @@ from optparse import OptionParser
 import sys
 import os
 import socket
+import netifaces
 target_table = ["192.168.1.98","192.168.21.215","192.168.21.212", "192.168.1.43"]
+gws = netifaces.gateways()
 
 def getAttacker():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
