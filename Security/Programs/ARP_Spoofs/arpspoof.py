@@ -12,7 +12,7 @@ import netifaces
 
 gateways = netifaces.gateways()
 host = gateways['default'][2][0]
-interface=gateways['default'][2][1]
+
 
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 
@@ -33,9 +33,11 @@ def main():
 
     if options.interface is None:
         mac = get_if_hwaddr(interface)
+        interface=gateways['default'][2][1]
     else:
         mac = get_if_hwaddr(options.interface)
-
+        interface = options.interface
+        
     def build_req(target, host):
         if target is None:
             pkt = Ether(src=mac, dst="ff:ff:ff:ff:ff:ff") / ARP(hwsrc=mac, psrc=host, pdst=host)
@@ -100,7 +102,7 @@ def main():
         try:
             sniff_filter = "ip host" + options.target
             print(f"[*] Starting network capture. Filter: {sniff_filter}")
-            packets = sniff(filter=sniff_filter, iface=options.interface, count = 1000)
+            packets = sniff(filter=sniff_filter, iface=interface, count = 1000)
             wrpcap(options.target + "_capture.pcap", packets)
         except KeyboardInterrupt:
             print("Game Over?")
