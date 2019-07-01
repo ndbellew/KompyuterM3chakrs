@@ -1,4 +1,4 @@
-import math
+
 line = input().split()
 x, y, z = int(line[0]), int(line[1]), int(line[2])
 
