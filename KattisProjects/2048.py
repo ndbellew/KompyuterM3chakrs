@@ -22,18 +22,13 @@ def read_data():
         matrix.append(string_to_int(input().split()))
     move = int(input())
     matrix = transpose(matrix, move)
-    '''
-    for i in range(4):
-        for j in range(4):
-            print(matrix[i][j], end=' ')
-        print("")
-    '''
+    \
     return matrix, move
 def write_answer(matrix, move):
     matrix = transpose(matrix, move)
     for i in range(4):
         for j in range(4):
-            print(matrix[i][j], end=' ')
+            print(matrix[i][j], '')
         print("")
 def move_matrix(matrix):
     for i in range(4):
