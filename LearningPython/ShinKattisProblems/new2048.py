@@ -40,17 +40,39 @@ def write_answer(matrix, move):
         print("")
 def move_matrix(matrix):
     for i in range(4):
+        line = matrix[i]
+        for x in range(2):
+            for y in range(3):
+                if line[y] == 0:
+                    line.pop(y)
+                    line.insert(0, 0)
+        #0000
 
+        #1000 -> 0001
+
+        #1001 -> 0011
+
+        #1101 -> 0111
+
+        #1023
+
+        #2110->0211->0022
+
+        #2222 -> 0224-> 0044
+
+        done = False
         added1 = False
         added2 = False
         twozero = False
-        allzero = 0
         aa_a = False
-        line = matrix[i]
+        allzero = 0
+        if line[0] == line[1] and line[2] and line[3]:
+            done = True
         if line[1] == 0 and line[2] == 0 and line[0] != 0 and line[3] != 0:
             twozero = True
         if line[2] == 0 and line[0] == line[1] and line[0] == line[3]:
             aa_a = True
+
         while line[3] == 0 and allzero < 10:
             line = [line[-1]] + line[:-1]
             allzero += 1
@@ -63,16 +85,15 @@ def move_matrix(matrix):
             line.pop(2)
             line.insert(0, 0)
             allzero += 1
-        if line[2] == line[1] and added1 != True and aa_a != True:
+        if line[2] == line[1]:
             line[2] *= 2
-            added2 = True
             line.pop(1)
             line.insert(0, 0)
         while line[1] == 0 and allzero < 10:
             line.pop(1)
             line.insert(0, 0)
             allzero += 1
-        if line[3] == line[2] and added2 != True:
+        if line[3] == line[2] and done == False:
             line[3] *= 2
             line.pop(2)
             line.insert(0, 0)
