@@ -26,17 +26,17 @@ if len(args) < 1 or options.version:
         sys.exit(0)
 
 if options.offset:
-    offset = options.offset
+    offset = int(options.offset)
 def FindLetter(letter):
     for i in range(0, len(alpha)-1):
-        if letter == alpha[i]:
+        if letter.lower() == alpha[i]:
             return i
 def Letters():
     EncryptedPhrase = " ".join(args)
     DecryptedPhrase = ""
     for i in EncryptedPhrase:
         if i != " ":
-            DL = int(offset)+FindLetter(i)
+            DL = offset+int(FindLetter(i))
             while DL>25:
                 DL-=26
             DecryptedPhrase+= alpha[DL]
