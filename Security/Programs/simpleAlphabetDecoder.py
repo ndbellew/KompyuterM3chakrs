@@ -6,7 +6,7 @@ import os
 import string
 from optparse import OptionParser
 
-VERSION = "Simple Alphabet 0.1 Alpha"
+VERSION = "Simple Alphabet 0.3 Alpha"
 alpha = list(string.ascii_lowercase)
 offset = 0
 
